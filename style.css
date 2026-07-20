@@ -5,17 +5,21 @@
 }
 
 :root {
-    --bg: #0f0f0f;
-    --text: #e8e8e8;
-    --text-muted: #a0a0a0;
-    --accent: #00d9ff;
-    --accent-dark: #0099cc;
-    --border: #2a2a2a;
+    --bg: #15140f;
+    --panel: #1d1b14;
+    --text: #ede6d6;
+    --text-muted: #8c8574;
+    --accent: #e8a23d;
+    --accent-dark: #c98a2e;
+    --border: #33301f;
+    --mono: ui-monospace, 'SF Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: var(--bg);
+    font-family: var(--sans);
+    background-color: var(--bg);
+    background-image: repeating-linear-gradient(0deg, rgba(232, 162, 61, 0.025) 0px, rgba(232, 162, 61, 0.025) 1px, transparent 1px, transparent 3px);
     color: var(--text);
     line-height: 1.6;
 }
@@ -27,10 +31,10 @@ a {
 /* Navigation & Hero */
 header {
     border-bottom: 1px solid var(--border);
-    padding: 2rem 0;
+    padding: 1.75rem 0;
     position: sticky;
     top: 0;
-    background: rgba(15, 15, 15, 0.95);
+    background: rgba(21, 20, 15, 0.92);
     backdrop-filter: blur(10px);
     z-index: 100;
 }
@@ -48,9 +52,9 @@ nav {
 }
 
 .logo {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: -0.5px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     text-decoration: none;
     color: var(--text);
 }
@@ -64,7 +68,10 @@ nav {
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     transition: color 0.2s;
 }
 
@@ -74,28 +81,36 @@ nav {
 
 /* Hero section */
 .hero {
-    padding: 6rem 0;
+    padding: 5.5rem 0 6rem;
     border-bottom: 1px solid var(--border);
 }
 
-.hero h1 {
-    font-size: 3.5rem;
-    line-height: 1.1;
+.hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
     margin-bottom: 1rem;
-    letter-spacing: -1px;
+}
+
+.hero h1 {
+    font-size: 3.25rem;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    max-width: 14ch;
 }
 
 .hero .accent {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent);
 }
 
 .hero p {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
-    max-width: 600px;
+    max-width: 560px;
     margin-bottom: 2rem;
 }
 
@@ -104,12 +119,13 @@ nav {
     gap: 1.5rem;
     flex-wrap: wrap;
     margin-bottom: 2rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
 }
 
 .hero-contact a {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -128,9 +144,9 @@ nav {
 
 .btn {
     padding: 0.75rem 1.5rem;
-    border-radius: 6px;
+    border-radius: 3px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s;
     border: 1px solid var(--border);
@@ -146,7 +162,6 @@ nav {
 .btn-primary:hover {
     background: var(--accent-dark);
     border-color: var(--accent-dark);
-    transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -165,19 +180,22 @@ nav {
 }
 
 .section-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
     margin-bottom: 3rem;
     position: relative;
+    padding-left: 1rem;
 }
 
 .section-title::before {
     content: '';
     position: absolute;
     width: 3px;
-    height: 2rem;
+    height: 1.7rem;
     background: var(--accent);
-    left: -1rem;
-    top: 0;
+    left: 0;
+    top: 0.15rem;
 }
 
 .projects-grid {
@@ -187,22 +205,36 @@ nav {
 }
 
 .project-card {
+    position: relative;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-top: 2px solid var(--accent);
+    border-radius: 3px;
     overflow: hidden;
-    transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.2s;
+    background: var(--panel);
 }
 
 .project-card:hover {
     border-color: var(--accent);
-    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px rgba(232, 162, 61, 0.25);
+}
+
+.project-card .card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.project-card .project-links,
+.project-card .card-link-exempt {
+    position: relative;
+    z-index: 2;
 }
 
 .project-image {
     width: 100%;
     height: 250px;
-    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    background: linear-gradient(135deg, #201e15, #15140f);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -223,19 +255,20 @@ nav {
 
 .project-tag {
     display: inline-block;
-    background: rgba(0, 217, 255, 0.1);
+    font-family: var(--mono);
     color: var(--accent);
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    padding: 0;
+    font-size: 0.72rem;
     font-weight: 600;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1em;
 }
 
 .project-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     margin-bottom: 0.75rem;
 }
 
@@ -253,29 +286,33 @@ nav {
 }
 
 .tech-badge {
-    background: rgba(0, 217, 255, 0.05);
-    border: 1px solid rgba(0, 217, 255, 0.2);
+    font-family: var(--mono);
+    background: rgba(232, 162, 61, 0.08);
+    border: 1px solid rgba(232, 162, 61, 0.3);
     color: var(--accent);
-    padding: 0.35rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
 }
 
 .project-links {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .project-links a {
     color: var(--accent);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
     font-weight: 500;
     transition: color 0.2s;
 }
 
 .project-links a:hover {
     color: var(--accent-dark);
+    text-decoration: underline;
 }
 
 /* Skills section */
@@ -291,25 +328,29 @@ nav {
 }
 
 .skill-category h3 {
+    font-family: var(--mono);
     color: var(--accent);
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .skill-list {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.6rem;
 }
 
 .skill-item {
-    background: rgba(0, 217, 255, 0.05);
-    border: 1px solid rgba(0, 217, 255, 0.2);
+    font-family: var(--mono);
+    background: rgba(232, 162, 61, 0.06);
+    border: 1px solid rgba(232, 162, 61, 0.25);
     color: var(--text);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 2px;
+    font-size: 0.82rem;
 }
 
 /* Footer */
@@ -321,9 +362,10 @@ footer {
 }
 
 .footer-about {
-    font-size: 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
     margin-bottom: 1.5rem;
-    line-height: 1.8;
+    line-height: 1.9;
 }
 
 .footer-links {
@@ -331,6 +373,8 @@ footer {
     justify-content: center;
     gap: 2rem;
     margin-bottom: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
 }
 
 .footer-links a {
@@ -353,7 +397,8 @@ footer {
     gap: 0.5rem;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
     margin-bottom: 2rem;
     transition: color 0.2s;
 }
@@ -363,9 +408,10 @@ footer {
 }
 
 .page-header h1 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
     margin-bottom: 1rem;
-    letter-spacing: -0.5px;
 }
 
 .page-header .project-tag {
@@ -378,11 +424,12 @@ footer {
 
 .prose {
     padding-bottom: 6rem;
-    max-width: 800px;
+    max-width: 760px;
 }
 
 .prose h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+    font-weight: 700;
     margin: 3rem 0 1.25rem;
     color: var(--text);
 }
@@ -414,7 +461,7 @@ footer {
 
 .prose video, .prose img {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 3px;
     border: 1px solid var(--border);
     margin-bottom: 1.25rem;
 }
@@ -423,7 +470,8 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1.5rem;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .prose th, .prose td {
@@ -433,8 +481,12 @@ footer {
 }
 
 .prose th {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: var(--accent);
-    background: rgba(0, 217, 255, 0.05);
+    background: rgba(232, 162, 61, 0.06);
 }
 
 .prose td {
@@ -442,9 +494,10 @@ footer {
 }
 
 .prose .callout {
-    border: 1px solid rgba(0, 217, 255, 0.2);
-    background: rgba(0, 217, 255, 0.05);
-    border-radius: 8px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    background: var(--panel);
+    border-radius: 0 3px 3px 0;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1.5rem;
 }
@@ -456,7 +509,8 @@ footer {
 /* Responsive */
 @media (max-width: 768px) {
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        max-width: none;
     }
 
     .projects-grid {
@@ -468,15 +522,11 @@ footer {
     }
 
     .section-title {
-        font-size: 1.5rem;
-    }
-
-    .section-title::before {
-        height: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .page-header h1 {
-        font-size: 1.9rem;
+        font-size: 1.75rem;
     }
 }
 
