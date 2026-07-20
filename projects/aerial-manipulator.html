@@ -37,16 +37,19 @@
         <p>Millions of birds die each year from window collisions. FLAP Canada's guidelines call for dot patterns spaced closely enough on glass to make windows visible to birds, but installing them on tall or hard-to-reach windows is difficult and often skipped. This project designs an aerial manipulator, a robotic arm mounted on a quadcopter, that can autonomously apply these bird-safe markers in place.</p>
 
         <h2>Design</h2>
+        <img src="../assets/aerial_manipulator_design.png" alt="Aerial manipulator CAD design render">
         <ul>
-            <li>An <strong>OpenMANIPULATOR-X</strong> 4-DOF arm mounted on a <strong>Holybro X650</strong> quadcopter, designed and modeled in SolidWorks.</li>
+            <li>An <strong>OpenMANIPULATOR-X</strong> 4-DOF arm mounted on a <strong>Holybro X650</strong> quadcopter, designed and modeled in Onshape.</li>
             <li>A <strong>reel-based marker feed mechanism</strong> (unwind/take-up reels, stepper-driven web advance) to apply markers at FLAP Canada's spacing guidelines while minimizing the payload the arm has to carry.</li>
             <li>A <strong>whole-body SE(3) geometric feedback-linearization controller</strong> (Python/ROS2) that couples the quadrotor and arm dynamics together, rather than controlling them independently, so the vehicle stays stable through arm extension, grasping, and retraction.</li>
         </ul>
+        <p>Getting there started as an MEng feasibility study: comparing spray-painting, film-perching, and label-applicator concepts before settling on the design above, then getting the CAD into Isaac Sim. The full Onshape assembly (606 parts, mostly fasteners) broke the simulator's articulation on import; rebuilding it as 9 composite rigid bodies with preserved mass properties fixed it and got the vehicle to a stable hover.</p>
 
         <h2>Validation</h2>
+        <img src="../assets/aerial_manipulator_hover.png" alt="Stable hover in Isaac Sim with the arm extended">
         <p>The full system is validated in <strong>NVIDIA Isaac Sim</strong> before any hardware trials. Simulation surfaced discrepancies invisible to offline validation, joint-frame sign convention mismatches and actuation timing issues, that only showed up once the full coupled dynamics were run together. To tune the controller systematically rather than by hand, I built an automated gain-sweep harness that sweeps controller gains across a range of trajectories and flags instability or poor tracking automatically.</p>
 
-        <p>The repo above has the Isaac Sim integration code, with demo media to follow. The whole-body controller implementation itself isn't included, since it builds on unpublished thesis research by a labmate. Reach out if you'd like more detail in the meantime.</p>
+        <p>The repo above has more on the design process and Isaac Sim integration code, with demo media to follow. The whole-body controller implementation itself isn't included, since it builds on unpublished thesis research by a labmate. Reach out if you'd like more detail in the meantime.</p>
     </section>
 
     <footer>
