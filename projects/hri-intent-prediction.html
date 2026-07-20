@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intent Prediction for Human-Robot Interaction — Ben Natra</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">Ben Natra</a>
+                <ul class="nav-links">
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#skills">Skills</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">&larr; Back to projects</a>
+            <span class="project-tag">Perception + ML</span>
+            <h1>Prediction of Intent for Human-Robot Interaction</h1>
+            <p>Final project for AER1515 (Perception for Robotics), University of Toronto, with Tian Yu.</p>
+            <div class="project-links">
+                <a href="https://github.com/BenNatIh/hri-intent-prediction">GitHub Repo</a>
+                <a href="https://github.com/BenNatIh/hri-intent-prediction/blob/main/report.pdf">Full Report (PDF)</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container prose">
+        <h2>Overview</h2>
+        <p>A robot that can tell whether a nearby person intends to interact with it can decide when to approach, when to stay out of the way, and when to switch a display from idle to a selection menu. We built a two-stream intent prediction pipeline that fuses <strong>body pose</strong> and <strong>gaze direction</strong>, evaluated on real video:</p>
+        <ul>
+            <li><strong>Pose stream:</strong> YOLOv11 keypoints &rarr; 2s sequence window &rarr; LSTM or Transformer classifier &rarr; binary "will interact" prediction.</li>
+            <li><strong>Gaze stream:</strong> MediaPipe face landmarks &rarr; MLP &rarr; pitch/yaw &rarr; binary "looking at the robot" prediction.</li>
+            <li>The two binary outputs are combined with a simple voting table (seek interaction / receptive / avoid) to produce the robot's recommended action.</li>
+        </ul>
+        <p>Splitting pose and gaze into two independently-trained models let us pull in more training data for each: four public datasets (Yale Shutter Interaction, MINT-RVAE, MPIIGaze, Columbia Gaze) were combined for training, with a fifth (JPL Interaction) used to qualitatively validate the full pipeline on unseen video.</p>
+
+        <h2>Demo</h2>
+        <p>One sequence with three views side by side: raw video, the LSTM's live intent prediction (interacting / not interacting), and the predicted gaze direction.</p>
+        <video src="../assets/hri-demo.mp4" controls muted loop></video>
+
+        <h2>My contributions</h2>
+        <p>This was a two-person project. I built:</p>
+        <ul>
+            <li><strong>Gaze dataset combination:</strong> merging MPIIGaze and Columbia Gaze into a single training set for the gaze model.</li>
+            <li><strong>Gaze prediction model and training:</strong> the MediaPipe-landmark &rarr; MLP pipeline that regresses pitch/yaw and thresholds it into an "at the robot" signal.</li>
+            <li><strong>Transformer model and training:</strong> the pose-sequence transformer classifier used as the alternative to the LSTM for intent classification.</li>
+            <li>Contributed to the Yale Shutter + MINT-RVAE dataset combination and coordinate-frame transform (pose-dataset side), alongside Tian Yu, who took the lead on getting this working and refined it further.</li>
+        </ul>
+        <p>Tian Yu built the YOLOv11 pose extraction/trajectory pipeline, the LSTM baseline, and the final voting/action logic.</p>
+
+        <h2>Results</h2>
+        <p>Pose-based intent classifier, compared against the MINT-RVAE reference (sequence-level F1, AUC):</p>
+        <table>
+            <thead><tr><th>Source</th><th>Architecture</th><th>F1</th><th>AUC</th></tr></thead>
+            <tbody>
+                <tr><td>MINT-RVAE (reference)</td><td>Transformer</td><td>0.899</td><td>0.951</td></tr>
+                <tr><td>MINT-RVAE (reference)</td><td>LSTM</td><td>0.876</td><td>0.934</td></tr>
+                <tr><td><strong>This project</strong></td><td><strong>Transformer</strong></td><td><strong>0.938</strong></td><td><strong>0.975</strong></td></tr>
+                <tr><td>This project</td><td>LSTM</td><td>0.933</td><td>0.969</td></tr>
+            </tbody>
+        </table>
+        <p>Gaze model, mean angular error vs. published baselines:</p>
+        <table>
+            <thead><tr><th>Source</th><th>Architecture</th><th>Mean error (&deg;)</th></tr></thead>
+            <tbody>
+                <tr><td>MPIIGaze (reference)</td><td>GazeNet</td><td>5.5</td></tr>
+                <tr><td>MPIIGaze (reference)</td><td>GazeNet+</td><td>5.4</td></tr>
+                <tr><td><strong>This project</strong></td><td><strong>MediaPipe landmarks + MLP</strong></td><td><strong>6.2</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout">
+            <p><strong>Important caveat:</strong> the transformer matched or slightly exceeded both the LSTM and the published MINT-RVAE reference, but this isn't an apples-to-apples architecture comparison. The reference was trained on a single dataset, while ours combined Yale Shutter + MINT-RVAE for ~10x the training sequences, which is the more likely driver of the gap. The label distribution (~64% positive) also likely inflates F1/accuracy somewhat. The numbers above also describe the pose classifier and gaze regressor in isolation: the combined pose+gaze fusion pipeline, the thing actually being pitched here, was only evaluated qualitatively on the JPL Interaction video (no ground truth labels available), not benchmarked quantitatively.</p>
+        </div>
+
+        <p>Qualitatively, fusing gaze with pose did reduce flicker in the pose model's predictions: gaze stayed reliable up close where pose keypoints got noisy, and pose stayed reliable at a distance where MediaPipe's face mesh dropped out, but there's no end-to-end accuracy number to back that up.</p>
+
+        <div class="callout">
+            <p>Full architecture, dataset details, and repo structure are in the <a href="https://github.com/BenNatIh/hri-intent-prediction">GitHub repo</a> and the <a href="https://github.com/BenNatIh/hri-intent-prediction/blob/main/report.pdf">full report</a>.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:ben.natra@gmail.com">ben.natra@gmail.com</a>
+                <a href="https://www.linkedin.com/in/ben-natra-1a329717a/">LinkedIn</a>
+                <a href="https://github.com/BenNatIh">GitHub</a>
+            </div>
+            <p>&copy; 2026 Ben Natra. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

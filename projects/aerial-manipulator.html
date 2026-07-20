@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aerial Installation of Bird-Safety Dot Patterns — Ben Natra</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">Ben Natra</a>
+                <ul class="nav-links">
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#skills">Skills</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">&larr; Back to projects</a>
+            <span class="project-tag">Robotics</span>
+            <h1>Aerial Installation of Bird-Safety Dot Patterns</h1>
+            <p>Ongoing project, Flight Systems and Control Lab, UTIAS &middot; Jan 2026&ndash;Present</p>
+        </div>
+    </section>
+
+    <section class="container prose">
+        <h2>Overview</h2>
+        <p>Millions of birds die each year from window collisions. FLAP Canada's guidelines call for dot patterns spaced closely enough on glass to make windows visible to birds, but installing them on tall or hard-to-reach windows is difficult and often skipped. This project designs an aerial manipulator, a robotic arm mounted on a quadcopter, that can autonomously apply these bird-safe markers in place.</p>
+
+        <h2>Design</h2>
+        <ul>
+            <li>An <strong>OpenMANIPULATOR-X</strong> 4-DOF arm mounted on a <strong>Holybro X650</strong> quadcopter, designed and modeled in SolidWorks.</li>
+            <li>A <strong>reel-based marker feed mechanism</strong> (unwind/take-up reels, stepper-driven web advance) to apply markers at FLAP Canada's spacing guidelines while minimizing the payload the arm has to carry.</li>
+            <li>A <strong>whole-body SE(3) geometric feedback-linearization controller</strong> (Python/ROS2) that couples the quadrotor and arm dynamics together, rather than controlling them independently, so the vehicle stays stable through arm extension, grasping, and retraction.</li>
+        </ul>
+
+        <h2>Validation</h2>
+        <p>The full system is validated in <strong>NVIDIA Isaac Sim</strong> before any hardware trials. Simulation surfaced discrepancies invisible to offline validation, joint-frame sign convention mismatches and actuation timing issues, that only showed up once the full coupled dynamics were run together. To tune the controller systematically rather than by hand, I built an automated gain-sweep harness that sweeps controller gains across a range of trajectories and flags instability or poor tracking automatically.</p>
+
+        <div class="callout">
+            <p>This is active lab work without a public repo yet, since the codebase needs to be reviewed and scrubbed of anything lab-internal before it can be shared. Reach out if you'd like more detail in the meantime.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:ben.natra@gmail.com">ben.natra@gmail.com</a>
+                <a href="https://www.linkedin.com/in/ben-natra-1a329717a/">LinkedIn</a>
+                <a href="https://github.com/BenNatIh">GitHub</a>
+            </div>
+            <p>&copy; 2026 Ben Natra. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

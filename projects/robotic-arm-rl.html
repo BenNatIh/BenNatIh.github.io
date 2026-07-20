@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotic Arm Control with RL — Ben Natra</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">Ben Natra</a>
+                <ul class="nav-links">
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="../index.html#skills">Skills</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="../index.html#projects" class="back-link">&larr; Back to projects</a>
+            <span class="project-tag">Robotics + RL</span>
+            <h1>Controlling a Robotic Arm with Reinforcement Learning</h1>
+            <p>Final project for ECE1508 (Reinforcement Learning), University of Toronto, with Sherman Lin and Muhammad Saad Musani.</p>
+            <div class="project-links">
+                <a href="https://github.com/BenNatIh/ECE1508_RL_Project">GitHub Repo</a>
+                <a href="https://github.com/BenNatIh/ECE1508_RL_Project/blob/main/report.pdf">Full Report (PDF)</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container prose">
+        <h2>Overview</h2>
+        <p>We evaluate <strong>TD3</strong>, <strong>SAC</strong>, and <strong>PPO-Clip with a custom on-policy HER</strong> on the <strong>FetchReach</strong> continuous-control task (Gym Robotics / MuJoCo): a 7-DoF Fetch Mobile Manipulator moving its end-effector to a randomly sampled target and holding position. Each algorithm is tested under:</p>
+        <ul>
+            <li><strong>Reward structure:</strong> dense vs. sparse.</li>
+            <li><strong>Observation noise:</strong> zero-mean Gaussian noise at &sigma; = 0, 0.01, 0.05, 0.1 added to the state observations.</li>
+        </ul>
+        <p>A proportional (PID-style) controller is used as a deterministic baseline. All results are averaged over 5 random seeds.</p>
+
+        <h2>My contribution</h2>
+        <p>Per the report's assertion of teamwork: I implemented and trained the <strong>PPO-Clip + HER</strong> agent; Sherman Lin implemented and trained TD3; Muhammad Saad Musani implemented and trained SAC.</p>
+        <p>The PPO piece specifically: an on-policy PPO-Clip agent (3-layer FC actor + critic) with a <strong>custom on-policy variant of Hindsight Experience Replay</strong>. Standard HER is designed for off-policy replay buffers. Here, failed trajectories are relabeled on-the-fly within the current batch (4 synthetic goals sampled per episode, only successful relabeled trajectories longer than 2 steps kept, capped at half the batch size), so the agent can still train fully on-policy while benefiting from HER's data augmentation under sparse rewards. Standard PPO without HER was also evaluated but wasn't competitive at any noise level or reward setting, so it's excluded from the results below.</p>
+
+        <h2>Results</h2>
+        <p>Success rate and average steps-to-goal, averaged over 5 seeds:</p>
+        <table>
+            <thead><tr><th>Agent</th><th>Dense</th><th>+Noise 0.01</th><th>+Noise 0.05</th><th>+Noise 0.1</th></tr></thead>
+            <tbody>
+                <tr><td>TD3</td><td>100%, 2.68</td><td>100%, 2.77</td><td>100%, 2.72</td><td>100%, 2.93</td></tr>
+                <tr><td>SAC</td><td>100%, 2.83</td><td>100%, 2.84</td><td>86%, 6.80</td><td>50%, 24.54</td></tr>
+                <tr><td><strong>PPO+HER</strong></td><td>100%, 2.98</td><td>100%, 2.74</td><td>100%, 3.22</td><td>100%, 3.48</td></tr>
+            </tbody>
+        </table>
+        <table>
+            <thead><tr><th>Agent (sparse)</th><th>Sparse</th><th>+Noise 0.01</th><th>+Noise 0.05</th><th>+Noise 0.1</th></tr></thead>
+            <tbody>
+                <tr><td>TD3</td><td>100%, 1.75</td><td>99.2%, 1.87</td><td>80%, 11.29</td><td>100%, 1.73</td></tr>
+                <tr><td>SAC</td><td>94%, 2.91</td><td>100%, 2.88</td><td>56%, 12.85</td><td>24%, 32.48</td></tr>
+                <tr><td><strong>PPO+HER</strong></td><td>96%, 4.96</td><td>100%, 3.28</td><td>62%, 21.1</td><td>76%, 15.22</td></tr>
+            </tbody>
+        </table>
+        <p>The PID baseline reached 100% success in every setting but took ~6 steps on average, slower than every learned agent, as expected for a controller with no learned adaptation.</p>
+
+        <h2>HER ablation (my contribution)</h2>
+        <p>Comparing PPO-Clip with vs. without the custom on-policy HER. Under dense rewards both variants converge to similar performance, since the reward signal is already frequent enough that HER isn't essential:</p>
+        <img src="../assets/her_comparison_dense.png" alt="PPO-Clip HER comparison, dense rewards">
+        <p>Under sparse rewards the two diverge sharply: the HER runs climb steadily over training while the no-HER runs stay flat near their starting values the entire run. This visually matches the report's conclusion that HER was necessary for PPO-Clip to learn anything under sparse rewards.</p>
+        <img src="../assets/her_comparison_sparse.png" alt="PPO-Clip HER comparison, sparse rewards">
+
+        <h2>Findings</h2>
+        <ul>
+            <li><strong>Dense rewards</strong> consistently beat sparse ones: more frequent learning signal, less reliance on stumbling into a successful trajectory.</li>
+            <li><strong>TD3</strong> was the most robust and sample-efficient overall, staying near-100% success even at the highest noise level, though it occasionally failed entire seeds under sparse rewards when early exploration produced no successful trajectories.</li>
+            <li><strong>SAC</strong> benefited from its stochastic policy under sparse rewards but its robustness collapsed under observation noise, with success dropping to 24&ndash;50% at &sigma; = 0.1.</li>
+            <li><strong>PPO+HER</strong> stayed stable and never fully collapsed, but its on-policy sample inefficiency shows up as higher step counts and a steeper drop under high sparse-reward noise.</li>
+            <li>Overall: deterministic off-policy methods (TD3) suit precise control with well-shaped rewards; stochastic/HER-augmented methods suit sparse-reward, exploration-critical settings.</li>
+        </ul>
+
+        <div class="callout">
+            <p>Full methodology, architecture details, and the complete write-up are in the <a href="https://github.com/BenNatIh/ECE1508_RL_Project">GitHub repo</a> and the <a href="https://github.com/BenNatIh/ECE1508_RL_Project/blob/main/report.pdf">full report</a>.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:ben.natra@gmail.com">ben.natra@gmail.com</a>
+                <a href="https://www.linkedin.com/in/ben-natra-1a329717a/">LinkedIn</a>
+                <a href="https://github.com/BenNatIh">GitHub</a>
+            </div>
+            <p>&copy; 2026 Ben Natra. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
