@@ -411,12 +411,12 @@
                     <div class="project-content">
                         <span class="project-tag">Robotics + RL</span>
                         <h3 class="project-title">Robotic Arm Control with RL</h3>
-                        <p class="project-description">Group project benchmarking RL algorithms against a PID baseline for a robotic arm reaching task, under dense/sparse rewards and noisy observations. <strong>My contribution:</strong> built the PPO agent and its actor-critic network, and ran the dense/sparse and noisy-observation experiments used to compare it against the team's PID, TD3, and SAC baselines.</p>
+                        <p class="project-description">Group project benchmarking TD3, SAC, and PPO against a PID baseline on the FetchReach robotic arm reaching task, across dense/sparse rewards and noisy observations. <strong>My contribution:</strong> built the PPO-Clip actor-critic agent and a custom on-policy variant of Hindsight Experience Replay (HER is normally off-policy only) to make sparse rewards tractable, and ran the dense/sparse and noise experiments benchmarking it against the team's PID, TD3, and SAC results.</p>
                         <div class="project-tech">
-                            <span class="tech-badge">PPO</span>
+                            <span class="tech-badge">PPO-Clip</span>
+                            <span class="tech-badge">HER</span>
                             <span class="tech-badge">Actor-Critic</span>
                             <span class="tech-badge">PyTorch</span>
-                            <span class="tech-badge">Python</span>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/BenNatIh/ECE1508_RL_Project">GitHub</a>
