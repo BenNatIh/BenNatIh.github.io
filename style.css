@@ -28,6 +28,12 @@ a {
     color: inherit;
 }
 
+#projects,
+#skills,
+#contact {
+    scroll-margin-top: 100px;
+}
+
 /* Navigation & Hero */
 header {
     border-bottom: 1px solid var(--border);
@@ -83,15 +89,6 @@ nav {
 .hero {
     padding: 5.5rem 0 6rem;
     border-bottom: 1px solid var(--border);
-}
-
-.hero-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
 }
 
 .hero h1 {
@@ -509,19 +506,6 @@ footer {
 
 .prose td {
     color: var(--text-muted);
-}
-
-.prose .callout {
-    border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
-    background: var(--panel);
-    border-radius: 0 3px 3px 0;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.prose .callout p:last-child {
-    margin-bottom: 0;
 }
 
 /* Responsive */
