@@ -44,49 +44,7 @@
             <h2 class="section-title">Featured Projects</h2>
 
             <div class="projects-grid">
-                <!-- Project 1: Aerial Manipulator -->
-                <div class="project-card">
-                    <a href="projects/aerial-manipulator.html" class="card-link" aria-label="Read full write-up: Aerial Installation of Bird-Safety Dot Patterns"></a>
-                    <div class="project-image">
-                        🚁
-                    </div>
-                    <div class="project-content">
-                        <span class="project-tag">Robotics</span>
-                        <h3 class="project-title">Aerial Installation of Bird-Safety Dot Patterns</h3>
-                        <p class="project-description">Ongoing lab project (Flight Systems and Control Lab, UTIAS): an aerial manipulator, an OpenMANIPULATOR-X arm mounted on a Holybro X650 quadcopter, that autonomously applies bird-safe window markers to meet FLAP Canada spacing guidelines. Designed a reel-based marker feed mechanism to minimize payload, and implemented a whole-body SE(3) geometric feedback-linearization controller coupling quadrotor and 4-DOF arm dynamics, validated in NVIDIA Isaac Sim with an automated gain-sweep harness for systematic tuning.</p>
-                        <div class="project-tech">
-                            <span class="tech-badge">ROS2</span>
-                            <span class="tech-badge">SE(3) Control</span>
-                            <span class="tech-badge">Python</span>
-                            <span class="tech-badge">NVIDIA Isaac Sim</span>
-                            <span class="tech-badge">SolidWorks</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: Robotic Arm RL -->
-                <div class="project-card">
-                    <a href="projects/robotic-arm-rl.html" class="card-link" aria-label="Read full write-up: Robotic Arm Control with RL"></a>
-                    <div class="project-image">
-                        🦾
-                    </div>
-                    <div class="project-content">
-                        <span class="project-tag">Robotics + RL</span>
-                        <h3 class="project-title">Robotic Arm Control with RL</h3>
-                        <p class="project-description">Group project benchmarking TD3, SAC, and PPO against a PID baseline on the FetchReach robotic arm reaching task, across dense/sparse rewards and noisy observations. <strong>My contribution:</strong> built the PPO-Clip actor-critic agent and a custom on-policy variant of Hindsight Experience Replay (HER is normally off-policy only) to make sparse rewards tractable, and ran the dense/sparse and noise experiments benchmarking it against the team's PID, TD3, and SAC results.</p>
-                        <div class="project-tech">
-                            <span class="tech-badge">PPO-Clip</span>
-                            <span class="tech-badge">HER</span>
-                            <span class="tech-badge">Actor-Critic</span>
-                            <span class="tech-badge">PyTorch</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/BenNatIh/ECE1508_RL_Project" class="card-link-exempt">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Intent Prediction for HRI -->
+                <!-- Project 1: Intent Prediction for HRI -->
                 <div class="project-card">
                     <a href="projects/hri-intent-prediction.html" class="card-link" aria-label="Read full write-up: Intent Prediction for Human-Robot Interaction"></a>
                     <div class="project-image">
@@ -105,6 +63,48 @@
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/BenNatIh/hri-intent-prediction" class="card-link-exempt">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project 2: Aerial Manipulator -->
+                <div class="project-card">
+                    <a href="projects/aerial-manipulator.html" class="card-link" aria-label="Read full write-up: Aerial Installation of Bird-Safety Dot Patterns"></a>
+                    <div class="project-image">
+                        <img src="assets/aerial_manipulator_hover.png" alt="birdsafe drone hovering">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">Robotics</span>
+                        <h3 class="project-title">Aerial Installation of Bird-Safety Dot Patterns</h3>
+                        <p class="project-description">Ongoing lab project (Flight Systems and Control Lab, UTIAS): an aerial manipulator, an OpenMANIPULATOR-X arm mounted on a Holybro X650 quadcopter, that autonomously applies bird-safe window markers to meet FLAP Canada spacing guidelines. Designed a reel-based marker feed mechanism to minimize payload, and implemented a whole-body SE(3) geometric feedback-linearization controller coupling quadrotor and 4-DOF arm dynamics, validated in NVIDIA Isaac Sim with an automated gain-sweep harness for systematic tuning.</p>
+                        <div class="project-tech">
+                            <span class="tech-badge">ROS2</span>
+                            <span class="tech-badge">SE(3) Control</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">NVIDIA Isaac Sim</span>
+                            <span class="tech-badge">SolidWorks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Robotic Arm RL -->
+                <div class="project-card">
+                    <a href="projects/robotic-arm-rl.html" class="card-link" aria-label="Read full write-up: Robotic Arm Control with RL"></a>
+                    <div class="project-image">
+                        <!-- Fetch Reach environment image from Gymnasium (https://gymnasium.farama.org/) -->
+                        <img src="assets/reach.gif" alt="Fetch Reach robotic arm environment">
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">Robotics + RL</span>
+                        <h3 class="project-title">Robotic Arm Control with RL</h3>
+                        <p class="project-description">Group project benchmarking TD3, SAC, and PPO against a PID baseline on the FetchReach robotic arm reaching task, across dense/sparse rewards and noisy observations. <strong>My contribution:</strong> built the PPO-Clip actor-critic agent and a custom on-policy variant of Hindsight Experience Replay (HER is normally off-policy only) to make sparse rewards tractable, and ran the dense/sparse and noise experiments benchmarking it against the team's PID, TD3, and SAC results.</p>
+                        <div class="project-tech">
+                            <span class="tech-badge">PPO-Clip</span>
+                            <span class="tech-badge">HER</span>
+                            <span class="tech-badge">Actor-Critic</span>
+                            <span class="tech-badge">PyTorch</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/BenNatIh/ECE1508_RL_Project" class="card-link-exempt">GitHub</a>
                         </div>
                     </div>
                 </div>
