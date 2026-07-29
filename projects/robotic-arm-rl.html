@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotic Arm Control with RL — Ben Natra</title>
+    <title>Robotic Arm Control with RL | Ben Natra</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -44,7 +44,7 @@
         <p>A proportional (PID-style) controller is used as a deterministic baseline. All results are averaged over 5 random seeds.</p>
 
         <h2>My contribution</h2>
-        <p>Per the report's assertion of teamwork: I implemented and trained the <strong>PPO-Clip + HER</strong> agent; one teammate implemented and trained TD3; the other implemented and trained SAC.</p>
+        <p>Per the report's assertion of teamwork: I implemented and trained the <strong>PPO-Clip + HER</strong> agent, one teammate implemented and trained TD3, and the other implemented and trained SAC.</p>
         <p>The PPO piece specifically: an on-policy PPO-Clip agent (3-layer FC actor + critic) with a <strong>custom on-policy variant of Hindsight Experience Replay</strong>. Standard HER is designed for off-policy replay buffers. Here, failed trajectories are relabeled on-the-fly within the current batch (4 synthetic goals sampled per episode, only successful relabeled trajectories longer than 2 steps kept, capped at half the batch size), so the agent can still train fully on-policy while benefiting from HER's data augmentation under sparse rewards. Standard PPO without HER was also evaluated but wasn't competitive at any noise level or reward setting, so it's excluded from the results below.</p>
 
         <h2>Results</h2>
@@ -79,7 +79,7 @@
             <li><strong>TD3</strong> was the most robust and sample-efficient overall, staying near-100% success even at the highest noise level, though it occasionally failed entire seeds under sparse rewards when early exploration produced no successful trajectories.</li>
             <li><strong>SAC</strong> benefited from its stochastic policy under sparse rewards but its robustness collapsed under observation noise, with success dropping to 24&ndash;50% at &sigma; = 0.1.</li>
             <li><strong>PPO+HER</strong> stayed stable and never fully collapsed, but its on-policy sample inefficiency shows up as higher step counts and a steeper drop under high sparse-reward noise.</li>
-            <li>Overall: deterministic off-policy methods (TD3) suit precise control with well-shaped rewards; stochastic/HER-augmented methods suit sparse-reward, exploration-critical settings.</li>
+            <li>Overall: deterministic off-policy methods (TD3) suit precise control with well-shaped rewards. Stochastic/HER-augmented methods suit sparse-reward, exploration-critical settings.</li>
         </ul>
 
         <p>Full methodology, architecture details, and the complete write-up are in the <a href="https://github.com/BenNatIh/ECE1508_RL_Project">GitHub repo</a> and the <a href="https://github.com/BenNatIh/ECE1508_RL_Project/blob/main/report.pdf">full report</a>.</p>

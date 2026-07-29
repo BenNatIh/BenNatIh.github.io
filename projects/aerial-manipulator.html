@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aerial Installation of Bird-Safety Dot Patterns — Ben Natra</title>
+    <title>Aerial Installation of Bird-Safety Dot Patterns | Ben Natra</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -42,19 +42,19 @@
         <ul>
             <li>An <strong>OpenMANIPULATOR-X</strong> 4-DOF arm mounted on a <strong>Holybro X650</strong> quadcopter, designed and modeled in Onshape.</li>
             <li>A <strong>reel-based marker feed mechanism</strong> (unwind/take-up reels, stepper-driven web advance) to apply markers at FLAP Canada's spacing guidelines while minimizing the payload the arm has to carry.</li>
-            <li>A <strong>whole-body SE(3) geometric feedback-linearization controller</strong> (Python/ROS2) that couples the quadrotor and arm dynamics together, rather than controlling them independently, so the vehicle stays stable through arm extension, grasping, and retraction.</li>
+            <li>A <strong>whole-body Cartesian impedance controller</strong> (Python/ROS2) that couples the quadrotor and arm dynamics together, rather than controlling them independently, so the vehicle stays stable through arm extension, grasping, and retraction.</li>
         </ul>
-        <p>Getting there started as an MEng feasibility study: comparing spray-painting, film-perching, and label-applicator concepts before settling on the design above, then getting the CAD into Isaac Sim. The full Onshape assembly (606 parts, mostly fasteners) broke the simulator's articulation on import; rebuilding it as 9 composite rigid bodies with preserved mass properties fixed it and got the vehicle to a stable hover.</p>
+        <p>Getting there started as an MEng feasibility study: comparing spray-painting, film-perching, and label-applicator concepts before settling on the design above, then getting the CAD into Isaac Sim. The full Onshape assembly (606 parts, mostly fasteners) broke the simulator's articulation on import. Rebuilding it as 9 composite rigid bodies with preserved mass properties fixed it and got the vehicle to a stable hover.</p>
 
         <h2>Simulation Setup</h2>
-        <p>The stack runs split across two OSes: <strong>NVIDIA Isaac Sim</strong> and QGroundControl on Windows, with <strong>PX4 SITL</strong> and <strong>ROS 2</strong> running in WSL2 (Ubuntu 22.04). Isaac Sim owns the physics, articulation, and rendering, while PX4 flies the vehicle over MAVLink exactly as it would on real hardware &mdash; so the same autopilot stack carries over to bench and flight testing later. Bridging the two environments reliably took some IP routing and firewall configuration to get MAVLink and ROS 2 traffic crossing the Windows&ndash;WSL2 boundary cleanly.</p>
+        <p>The stack runs split across two OSes: <strong>NVIDIA Isaac Sim</strong> and QGroundControl on Windows, with <strong>PX4 SITL</strong> and <strong>ROS 2</strong> running in WSL2 (Ubuntu 22.04). Isaac Sim owns the physics, articulation, and rendering, while PX4 flies the vehicle over MAVLink exactly as it would on real hardware, so the same autopilot stack carries over to bench and flight testing later. Bridging the two environments reliably took some IP routing and firewall configuration to get MAVLink and ROS 2 traffic crossing the Windows&ndash;WSL2 boundary cleanly.</p>
 
         <h2>Validation</h2>
         <img src="../assets/aerial_manipulator_hover.png" alt="Stable hover in Isaac Sim with the arm extended">
         <p>The full system is validated in Isaac Sim before any hardware trials. Simulation surfaced discrepancies invisible to offline validation, joint-frame sign convention mismatches and actuation timing issues, that only showed up once the full coupled dynamics were run together. To tune the controller systematically rather than by hand, I built an automated gain-sweep harness that sweeps controller gains across a range of trajectories and flags instability or poor tracking automatically.</p>
         <p>Pick-and-place from a shelf to a lower pillar, exercising the whole-body controller through a larger range of arm motion than a fixed pick point:</p>
         <video src="../assets/aerial_manip_pickplace_shelf.mp4" controls muted loop></video>
-        <p><em>Note: the current whole-body controller and pick-and-place validation work runs on a general aerial-manipulator test configuration in Isaac Sim, not yet the bird-safe marker end-effector design shown above &mdash; that integration is still ahead.</em></p>
+        <p><em>Note: the current whole-body controller and pick-and-place validation work runs on a general aerial-manipulator test configuration in Isaac Sim, not yet the bird-safe marker end-effector design shown above. That integration is still ahead.</em></p>
 
         <p>The repo above has more on the design process, Isaac Sim integration code, and a pick-and-place demo video. The whole-body controller implementation itself isn't included, since it builds on unpublished thesis research by a labmate. Reach out if you'd like more detail in the meantime.</p>
     </section>
