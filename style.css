@@ -312,6 +312,55 @@ nav {
     text-decoration: underline;
 }
 
+/* Experience section */
+.experience {
+    padding: 6rem 0;
+    border-top: 1px solid var(--border);
+}
+
+.experience-item {
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: 3px;
+    background: var(--panel);
+    padding: 1.75rem 2rem;
+}
+
+.experience-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.experience-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.experience-meta {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+}
+
+.experience-list {
+    color: var(--text-muted);
+    padding-left: 1.1rem;
+}
+
+.experience-list li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+}
+
+.experience-list li:last-child {
+    margin-bottom: 0;
+}
+
 /* Skills section */
 .skills {
     padding: 6rem 0;

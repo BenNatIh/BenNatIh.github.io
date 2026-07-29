@@ -25,7 +25,7 @@
             <a href="../index.html#projects" class="back-link">&larr; Back to projects</a>
             <span class="project-tag">Robotics + RL</span>
             <h1>Controlling a Robotic Arm with Reinforcement Learning</h1>
-            <p>Final project for ECE1508 (Reinforcement Learning), University of Toronto, with Sherman Lin and Muhammad Saad Musani.</p>
+            <p>Final project for ECE1508 (Reinforcement Learning), University of Toronto, with two teammates.</p>
             <div class="project-links">
                 <a href="https://github.com/BenNatIh/ECE1508_RL_Project">GitHub Repo</a>
                 <a href="https://github.com/BenNatIh/ECE1508_RL_Project/blob/main/report.pdf">Full Report (PDF)</a>
@@ -43,7 +43,7 @@
         <p>A proportional (PID-style) controller is used as a deterministic baseline. All results are averaged over 5 random seeds.</p>
 
         <h2>My contribution</h2>
-        <p>Per the report's assertion of teamwork: I implemented and trained the <strong>PPO-Clip + HER</strong> agent; Sherman Lin implemented and trained TD3; Muhammad Saad Musani implemented and trained SAC.</p>
+        <p>Per the report's assertion of teamwork: I implemented and trained the <strong>PPO-Clip + HER</strong> agent; one teammate implemented and trained TD3; the other implemented and trained SAC.</p>
         <p>The PPO piece specifically: an on-policy PPO-Clip agent (3-layer FC actor + critic) with a <strong>custom on-policy variant of Hindsight Experience Replay</strong>. Standard HER is designed for off-policy replay buffers. Here, failed trajectories are relabeled on-the-fly within the current batch (4 synthetic goals sampled per episode, only successful relabeled trajectories longer than 2 steps kept, capped at half the batch size), so the agent can still train fully on-policy while benefiting from HER's data augmentation under sparse rewards. Standard PPO without HER was also evaluated but wasn't competitive at any noise level or reward setting, so it's excluded from the results below.</p>
 
         <h2>Results</h2>
